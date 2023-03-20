@@ -1,0 +1,50 @@
+{% extends "./base.html" %}
+{% block title %}Clientes{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edicion cliente</h2>
+    
+        <div class="card">
+            <div class="card-body">
+                <form action="/editarFactura/"method="POST" > {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="txtid" name="txtid" value="{{empresa.legal_name}}" class="form-control" placeholder="legal_name"
+                                minlength="1" maxlength="20" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="num" name="num"  value="{{empresa.numero}}" class="form-control" min="1" max="9"
+                            value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtfechacotizacion" name="txtfechacotizacion" value="{{empresa.fechaCotizacion}}" class="form-control" placeholder="fechaCotizacion"
+                                minlength="6" maxlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtfechapedido" name="txtfechapedido" value="{{empresa.fechaPedido}}" class="form-control" placeholder="fechapedido"
+                                minlength="6" maxlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="tipoventa" name="tipoventa" value="{{empresa.tipoVenta}}" class="form-control" placeholder="tipoventa"
+                                minlength="6" maxlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="moneda" name="moneda" value="{{empresa.moneda}}" class="form-control" placeholder="moneda"
+                                minlength="6" maxlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="nombreVendedor" name="nombreVendedor" value="{{empresa.nombreVendedor}}" class="form-control" placeholder="nombreVendedor"
+                                minlength="6" maxlength="6" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                    
+    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

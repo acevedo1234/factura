@@ -1,0 +1,87 @@
+{% extends "./base.html" %}
+{% block title %} Gestión de productos{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Productos</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            <form action="/registrarProducto/"method="POST" > {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" id="txtid" name="txtid" class="form-control" placeholder="legal_name"
+                            minlength="1" maxlength="20" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="num" name="num" class="form-control" min="1" max="9"
+                        value="1" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="txtfechacotizacion" name="txtfechacotizacion" class="form-control" placeholder="fechaCotizacion"
+                            minlength="6" maxlength="6" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="txtfechapedido" name="txtfechapedido" class="form-control" placeholder="fechapedido"
+                            minlength="6" maxlength="6" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="tipoventa" name="tipoventa" class="form-control" placeholder="tipoventa"
+                            minlength="6" maxlength="6" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="moneda" name="moneda" class="form-control" placeholder="moneda"
+                            minlength="6" maxlength="6" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="nombreVendedor" name="nombreVendedor" class="form-control" placeholder="nombreVendedor"
+                            minlength="6" maxlength="6" required>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                </div>
+                
+
+            </form>
+        </div>
+    </div>
+</div>
+    
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h1>Listado de productos</h1>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>   
+                            <th>id</th>
+                            <th>Numero</th>
+                            <th>fecha cotizacion</th>
+                            <th>fecha pedido</th>
+                            <th>tipo venta</th>
+                            <th>moneda</th>
+                            <th>nombre vendedor</th>
+                            <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for c in Productos %}
+                    <tr>
+                        
+                        <td>{{c.id}}</td>
+                        <td>{{c.numero}}</td>
+                        <td>{{c.fechaCotizacion}}</td>
+                        <td>{{c.fechaPedido}}</td>
+                        <td>{{c.tipoVenta}}</td>
+                        <td>{{c.moneda}}</td>
+                        <td>{{c.nombreVendedor}}</td>
+                        <td><a href="edicionfactura/{{c.id}}" class="btn btn-info">Editar</a></td>
+                        <td><a href="eliminarfactura/{{c.moneda}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

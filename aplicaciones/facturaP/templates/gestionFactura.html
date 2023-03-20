@@ -1,0 +1,147 @@
+{% extends "./base.html" %}
+{% block title %} Gestión de facturas{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Cliente</h2>
+    
+    <div class="card">
+        <div class="card-body">
+            <form action="/registrarFactura/"method="POST" > {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" id="txtid" name="txtid" class="form-control" placeholder="legal_name"
+                            minlength="1" maxlength="20" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="num" name="num" class="form-control" min="1" max="9"
+                        value="1" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="txtfechacotizacion" name="txtfechacotizacion" class="form-control" placeholder="fechaCotizacion"
+                            minlength="6" maxlength="6" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="txtfechapedido" name="txtfechapedido" class="form-control" placeholder="fechapedido"
+                            minlength="6" maxlength="6" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="tipoventa" name="tipoventa" class="form-control" placeholder="tipoventa"
+                            minlength="6" maxlength="6" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="moneda" name="moneda" class="form-control" placeholder="moneda"
+                            minlength="6" maxlength="6" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="nombreVendedor" name="nombreVendedor" class="form-control" placeholder="nombreVendedor"
+                            minlength="6" maxlength="6" required>
+                </div>
+                
+                <div class="form-group">
+                    <button  type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+
+                     
+
+
+                </div>
+                
+
+            </form>
+        </div>
+    </div>
+</div>
+    
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h1>Listado de clientes</h1>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>   
+                            <th>legal name</th>
+                            <th>Numero</th>
+                            <th>fecha cotizacion</th>
+                            <th>fecha pedido</th>
+                            <th>tipo venta</th>
+                            <th>moneda</th>
+                            <th>nombre vendedor</th>
+                            <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody id="data">
+                </tbody>
+                <tbody>
+                    {% for c in facturas %}
+                    <tr>
+                        
+                        <td>{{c.legal_name}}</td>
+                        <td>{{c.numero}}</td>
+                        <td>{{c.fechaCotizacion}}</td>
+                        <td>{{c.fechaPedido}}</td>
+                        <td>{{c.tipoVenta}}</td>
+                        <td>{{c.moneda}}</td>
+                        <td>{{c.nombreVendedor}}</td>
+                        <td><a href="edicionfactura/{{c.legal_name}}" class="btn btn-info">Editar</a></td>
+                        <td><a href="eliminarfactura/{{c.moneda}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody >
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const mostrarData = (data) => {
+    console.log(data)
+    let body = ""
+        
+       body+=`<tr><td>${data.id}</td><td>${data.legal_name}</td><td>${data.email}</td></tr>`
+    
+    document.getElementById('data').innerHTML = body
+    //console.log(body)
+}
+
+  
+        let clien={
+    legal_name: "Dunder Mifflin",
+    tax_id: "ABC101010111",
+    tax_system: "601",
+    email: "email@example.com",
+    phone: "6474010101",
+    address:{
+    street: "Blvd. Atardecer",
+    exterior:"142",
+    interior:"4",
+    neighborhood: "Centro",
+    city: "Huatabampo",
+    municipality: "Huatabampo",
+    zip:"86500",
+    state: "Sonora",
+    country: "MEX"
+    }
+
+
+};
+fetch('https://www.facturapi.io/v2/customers',{
+
+method:'POST',
+body:JSON.stringify(clien),
+headers:{
+    'Content-Type': 'application/json',
+    'Authorization':'Bearer sk_test_v3rnMZqGldzDb7pKJlVPyBG5e0ExB4eyWLAaj0kQRm'
+
+}
+
+})
+.then(resp=>resp.json())
+.then(data=>{
+
+console.log(data)
+    
+})
+
+   
+</script>
+
+
+{% endblock %}
